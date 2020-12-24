@@ -1,11 +1,10 @@
-// import MainPage from '../PageObject/MainPage'
+import MainPage from '../PageObject/MainPage'
 
 describe('TestSuite', () => {
+  const mainPage=new MainPage()
   it('VerifyOfTitle', function ()
   {
-    const mainPage=new MainPage()
     mainPage.visitMainPage()
-    cy.visit('')
     cy.url().should('include','en')
     cy.title().should('eq','Wikipedia, the free encyclopedia')
   })
@@ -13,16 +12,16 @@ describe('TestSuite', () => {
   it('VerifyOfSearch', function ()
   {
     mainPage.searchInput().should('be.visible').should('be.enabled').type('Ukraine')
-    searchButton().should('be.visible').should('be.enabled').click()
+    mainPage.searchButton().should('be.visible').should('be.enabled').click()
     cy.title('eq',"Ukraine")
     cy.url().should('include','Ukraine')
   })
-  
+
   it('VerifyOfSearchSuggestions',function()
   {
     cy.go('back')
-    cy.searchInput().should('be.visible').should('be.enabled').type('Ukr')
-    suggestionsResult().each(($e,index,$list) => {
+    mainPage.searchInput().should('be.visible').should('be.enabled').type('Ukr')
+    mainPage.suggestionsResult().each(($e,index,$list) => {
       const text=$e.text()
       expect(text).to.be.equal("Ukr")
     })
@@ -30,43 +29,43 @@ describe('TestSuite', () => {
 
   it('VerifyThatLanguageSettingsDialogIsOpenedAfterUserClicksOnSettingsButton',function ()
   {
-    languageSettingsButton().click()  
-    languageSettingsModel().should('be.visible')
+    mainPage.languageSettingsButton().click()  
+    mainPage.languageSettingsModel().should('be.visible')
   })
 
   it('VerifyThatanguageSettingsDialogIsClosedAfterUserCliksOnCancelButton',function()
   {
-    languageSettingsModelCancelButton().click()
-    languageSettingsModel().should('not.be.visible')
+    mainPage.languageSettingsModelCancelButton().click()
+    mainPage.languageSettingsModel().should('not.be.visible')
   })
 
   it('VerifyEnablingOfDifferentFontFamilyInLanguageSettings',function() 
   {
-    cy.get('#p-lang button').click()
-    cy.get("[id*='fonts-tab']").click()
-    cy.get("[class*='fonts-tab']").should('be.visible')
-    cy.get('#webfonts-enable-checkbox').check().should('be.checked')
-    cy.get("[class*='content-fonts']").should('be.visible')
-    cy.get('#content-font-selector').select('ComicNeue').should('have.value','ComicNeue')
-    cy.get("[class*='settings-apply']").click()
-    cy.get('#language-settings-dialog').should('not.be.visible')
-    cy.get('#content').should('have.css','font-family').and('contain','ComicNeue')
+    mainPage.languageSettingsButton().click()
+    mainPage.languageSettingsModelFontsTabButton().click()
+    mainPage.languageSettingsModelFontsTab().should('be.visible')
+    mainPage.languageSettingsModelFontsTabWebfontsCheckbox().check().should('be.checked')
+    mainPage.languageSettingsModelFontsTabContentFontsTab().should('be.visible')
+    mainPage.languageSettingsModelFontsTabContentFontsSelector().select('ComicNeue').should('have.value','ComicNeue')
+    mainPage.languageSettingsModelFontsTabApplySettingsButton().click()
+    mainPage.languageSettingsModel().should('not.be.visible')
+    mainPage.pageContent().should('have.css','font-family').and('contain','ComicNeue')
   })
 
   it('VerifyThatSelectedLanguageIsEnabledInSearchInputModalAfterUserSelectsItInLanguageSettings', function()
   {
-    cy.get('#p-lang button').click()
-    cy.get('#input-panel-trigger').click()
-    cy.get("[class*='input-toggle-button']").click()
-    cy.get("button[lang='en']").click()
-    cy.get('#ipa-x-sampa').check({force: true}).should('be.checked')
-    cy.get("[class*='settings-apply']").click()
-    cy.get('#language-settings-dialog').should('not.be.visible')
-    cy.get('#searchInput').click()
-    cy.get("[class='imeselector imeselector-toggle']").should('be.visible').click()
-    cy.get("[class*='imeselector-toggle']").should('be.visible')
-    cy.get("li[data-ime-inputmethod*='ipa-x-sampa']").contains('International Phonetic Alphabet - X-SAMPA').should('be.visible')
-    cy.get("li[data-ime-inputmethod*='ipa-x-sampa']").should('have.attr','class').and('contain','ime-checked')
+    mainPage.languageSettingsButton().click()
+    mainPage.languageSettingsModelInputTrigger().click()
+    mainPage.languageSettingsModelInputToggleButton().click()
+    mainPage.languageSettingsModelEngLanguage().click()
+    mainPage.languageSettingsModelInputIPAXSMPA().check({force: true}).should('be.checked')
+    mainPage.languageSettingsModelFontsTabApplySettingsButton().click()
+    mainPage.languageSettingsModel().should('not.be.visible')
+    mainPage.searchInput().click()
+    mainPage.searchImaSelector().should('be.visible').click()
+    mainPage.searchImaSelectorToggle().should('be.visible')
+    mainPage.searchIPAXSMPAMethod().contains('International Phonetic Alphabet - X-SAMPA').should('be.visible')
+    mainPage.searchIPAXSMPAMethod().should('have.attr','class').and('contain','ime-checked')
   })
 
 })

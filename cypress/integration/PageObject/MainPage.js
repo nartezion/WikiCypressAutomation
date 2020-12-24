@@ -28,6 +28,66 @@ class MainPage {
         return cy.get("button[class*='cancel']")
     }
 
+    languageSettingsModelFontsTabButton(){
+        return cy.get("[id*='fonts-tab']")
+    }
+
+    languageSettingsModelFontsTab(){
+        return cy.get("[class*='fonts-tab']")
+    }
+
+    languageSettingsModelFontsTabWebfontsCheckbox(){
+        return cy.get('#webfonts-enable-checkbox')
+    }
+
+    languageSettingsModelFontsTabContentFontsTab(){
+        return cy.get("[class*='content-fonts']")
+    }
+
+    languageSettingsModelFontsTabContentFontsSelector(){
+        return cy.get('#content-font-selector')
+    }
+
+    languageSettingsModelFontsTabApplySettingsButton(){
+        return cy.get("[class*='settings-apply']")
+    }
+
+    pageContent(){
+        return cy.get('#content')
+    }
+
+    languageSettingsModelInputTrigger(){
+        return cy.get('#input-panel-trigger')
+    }
+
+    languageSettingsModelInputToggleButton(){
+        return cy.get("[class*='input-toggle-button']")
+    }
+
+    languageSettingsModelEngLanguage(){
+        return cy.get("button[lang='en']")
+    }
+
+    languageSettingsModelInputIPAXSMPA(){
+        return cy.get('#ipa-x-sampa')
+    }
+
+    searchImaSelector(){
+        return cy.get("[class='imeselector imeselector-toggle']")
+    }
+
+    searchImaSelectorToggle(){
+        return cy.get("[class*='imeselector-toggle']")
+    }
+
+    searchIPAXSMPAMethod(){
+        return cy.get("li[data-ime-inputmethod*='ipa-x-sampa']")
+    }
+
+
+
+
+
 
 
 
